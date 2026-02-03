@@ -4,11 +4,20 @@
   font-weight: 400;
 }
 
+:root {
+  --rtl-font-stack: 'Segoe UI', Tahoma, sans-serif;
+}
+
+.rtl-use-vazir {
+  --rtl-font-stack: 'Vazirmatn', 'Segoe UI', Tahoma, sans-serif;
+}
+
 .rtl-content-block {
   direction: rtl !important;
   text-align: right !important;
-  font-family: 'Vazirmatn', 'Segoe UI', Tahoma, sans-serif !important;
+  font-family: var(--rtl-font-stack) !important;
   unicode-bidi: isolate !important;
+  line-height: 1.7 !important;
 }
 
 .rtl-content-block pre,
