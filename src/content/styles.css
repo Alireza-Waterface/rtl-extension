@@ -1,0 +1,34 @@
+/* فونت وزیرمتن را اینجا تعریف می‌کنیم (بعداً فایلش را اضافه می‌کنیم) */
+@font-face {
+  font-family: 'Vazirmatn';
+  src: local('vazirmatn'); /* فعلا فونت لوکال */
+  font-weight: 400;
+}
+
+/* کلاسی که ما به المنت‌های فارسی اضافه می‌کنیم */
+.rtl-extension-active {
+  direction: rtl !important;
+  text-align: right !important;
+  font-family: 'Vazirmatn', 'Segoe UI', Tahoma, sans-serif !important;
+}
+
+/* استثنا برای کدهای برنامه‌نویسی */
+/* هر تگ کدی که داخل المنت فارسی ما بود، باید چپ‌چین بماند */
+.rtl-extension-active pre,
+.rtl-extension-active code,
+.rtl-extension-active .hljs, /* برای هایلایت‌های متداول */
+.rtl-extension-active [class*="language-"], /* برای بلاک‌های کد */
+.rtl-extension-active kbd,
+.rtl-extension-active samp {
+  direction: ltr !important;
+  text-align: left !important;
+  font-family: 'Courier New', Courier, monospace !important;
+  unicode-bidi: isolate; /* جلوگیری از به هم ریختگی پرانتزها */
+}
+
+/* اصلاح لیست‌ها */
+.rtl-extension-active ul,
+.rtl-extension-active ol {
+  padding-right: 2rem !important;
+  padding-left: 0 !important;
+}
