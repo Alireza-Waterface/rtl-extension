@@ -6,35 +6,33 @@ import { useState, useEffect } from 'react';
  * @param initialValue مقدار اولیه
  */
 export function useStorage<T>(key: string, initialValue: T) {
-  const [storedValue, setStoredValue] = useState<T>(initialValue);
+   const [storedValue, setStoredValue] = useState<T>(initialValue);
 
-  useEffect(() => {
-    // خواندن مقدار اولیه از استوریج
-    chrome.storage.local.get([key], (result) => {
-      if (result[key] !== undefined) {
-        setStoredValue(result[key]);
-      } else {
-        // اگر مقداری نبود، مقدار پیش‌فرض را ذخیره کن
-        chrome.storage.local.set({ [key]: initialValue });
-      }
-    });
+   useEffect(() => {
+      chrome.storage.local.get([key], (result) => {
+         const value = result[key];
+         if (value !== undefined) {
+            setStoredValue(value as T);
+         } else {
+            chrome.storage.local.set({ [key]: initialValue });
+         }
+      });
 
-    // گوش دادن به تغییرات (اگر در تب دیگری یا جای دیگر تغییر کرد)
-    const handleStorageChange = (changes: { [key: string]: chrome.storage.StorageChange }) => {
-      if (changes[key]) {
-        setStoredValue(changes[key].newValue);
-      }
-    };
+      const handleStorageChange = (changes: Record<string, chrome.storage.StorageChange>) => {
+         const change = changes[key];
+         if (change && change.newValue !== undefined) {
+            setStoredValue(change.newValue as T);
+         }
+      };
 
-    chrome.storage.onChanged.addListener(handleStorageChange);
-    return () => chrome.storage.onChanged.removeListener(handleStorageChange);
-  }, [key, initialValue]);
+      chrome.storage.onChanged.addListener(handleStorageChange);
+      return () => chrome.storage.onChanged.removeListener(handleStorageChange);
+   }, [key, initialValue]);
 
-  // تابع برای آپدیت کردن مقدار
-  const setValue = (value: T) => {
-    setStoredValue(value);
-    chrome.storage.local.set({ [key]: value });
-  };
+   const setValue = (value: T) => {
+      setStoredValue(value);
+      chrome.storage.local.set({ [key]: value });
+   };
 
-  return [storedValue, setValue] as const;
+   return [storedValue, setValue] as const;
 }
