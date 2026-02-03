@@ -15,7 +15,7 @@ export default defineManifest({
       default_popup: "src/popup/index.html",
       default_title: "RTL Settings",
    },
-   options_page: "src/options/index.html",
+   // options_page: "src/options/index.html",
    background: {
       service_worker: "src/background/index.ts",
       type: "module",
@@ -27,5 +27,9 @@ export default defineManifest({
          run_at: "document_end",
       },
    ],
-   // Icons
+   icons: {
+      "16": "icon16.png",
+      "48": "icon48.png",
+      "128": "icon128.png",
+   }
 });

@@ -1,75 +1,72 @@
-# React + TypeScript + Vite
+# RTL Master 🚀
+**Advanced & Smart RTL Support for Modern Web Pages**
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+[![React](https://img.shields.io/badge/React-19.2-blue)](https://react.dev/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind-v4.0-38bdf8)](https://tailwindcss.com/)
+[![Bun](https://img.shields.io/badge/Bun-1.3-f9f1f1)](https://bun.sh/)
 
-Currently, two official plugins are available:
+**RTL Master** یک اکستنشن مرورگر کروم است که با هدف حل مشکل نمایش متون فارسی و راست‌چین در سایت‌های خارجی، به‌ویژه پلتفرم‌های هوش مصنوعی (ChatGPT, Claude, Gemini) و مستندات فنی (StackOverflow) طراحی شده است.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+## ✨ قابلیت‌های کلیدی
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+- **تشخیص هوشمند محتوا:** اکستنشن به صورت خودکار متون فارسی/عربی را تشخیص داده و فقط همان بخش‌ها را راست‌چین می‌کند.
+- **ایزوله‌سازی کد (Code Preservation):** برخلاف اکستنشن‌های مشابه، RTL Master بلوک‌های کد (`pre`, `code`) را تشخیص داده و اجازه نمی‌دهد استایل راست‌چین باعث به هم ریختگی کدهای برنامه‌نویسی شود.
+- **مدیریت محدوده (Scope Management):**
+  - **Global Mode:** اعمال تنظیمات روی تمام تب‌های مرورگر.
+  - **Tab Mode:** اعمال تنظیمات اختصاصی فقط روی تب فعلی (Override).
+- **عملکرد بهینه (High Performance):** استفاده از سیستم اسکن دسته‌ای (Batch Scanning) با استفاده از `MutationObserver` و `TreeWalker` برای جلوگیری از لگ در صفحات سنگین.
+- **تایپوگرافی زیبا:** پشتیبانی از فونت **وزیرمتن (Vazirmatn)** برای خوانایی بهتر متون فارسی.
+- **رابط کاربری مدرن:** طراحی شده با React 19 و Tailwind CSS v4.
 
-Note: This will impact Vite dev & build performances.
+---
 
-## Expanding the ESLint configuration
+## 🛠 تکنولوژی‌های استفاده شده
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- **React 19:** برای مدیریت رابط کاربری (Popup).
+- **Tailwind CSS v4:** برای استایل‌دهی مدرن و بهینه.
+- **TypeScript:** برای تضمین پایداری کد و جلوگیری از خطاهای زمان اجرا.
+- **Bun:** به عنوان Runtime و مدیریت پکیج سریع.
+- **Vite + CRXJS:** برای بیلد سیستم پیشرفته و Hot Module Replacement در زمان توسعه اکستنشن.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+---
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## 🚀 راهنمای نصب و توسعه
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+اگر می‌خواهید پروژه را به صورت محلی اجرا کنید یا توسعه دهید:
+
+### ۱. پیش‌نیازها
+مطمئن شوید [Bun](https://bun.sh/) روی سیستم شما نصب است.
+
+### ۲. نصب دیپندسی‌ها
+```bash
+bun install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### ۳. اجرای حالت توسعه
+```bash
+bun run dev
 ```
+
+### ۴. بارگذاری در کروم
+1. مرورگر کروم را باز کرده و به آدرس `chrome://extensions` بروید.
+2. گزینه **Developer Mode** را در بالا سمت راست فعال کنید.
+3. روی دکمه **Load Unpacked** کلیک کرده و پوشه `dist` در پروژه را انتخاب کنید.
+
+---
+
+## 📖 نحوه استفاده
+
+1. روی آیکون اکستنشن در نوار ابزار کلیک کنید.
+2. در بخش **Scope**، انتخاب کنید که می‌خواهید تغییرات روی همه تب‌ها (Global) اعمال شود یا فقط تب فعلی (Tab).
+3. با دکمه اصلی، قابلیت راست‌چین را فعال یا غیرفعال کنید.
+4. در صورت نیاز، فونت وزیرمتن را از بخش تنظیمات فعال کنید.
+
+---
+
+## 🤝 مشارکت در پروژه
+از پیشنهادات و Pull Request‌های شما استقبال می‌شود! اگر باگی پیدا کردید، لطفاً در بخش Issues گزارش دهید.
+
+## 👤 نویسنده
+- **علیرضا آبچهره** - [waterface.ir](https://waterface.ir)
