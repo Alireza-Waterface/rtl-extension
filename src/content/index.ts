@@ -26,6 +26,20 @@ const BLOCK_TAGS = new Set([
 ]);
 const CODE_TAGS = new Set(['CODE', 'PRE', 'SCRIPT', 'STYLE', 'NOSCRIPT']);
 
+const pendingNodes = new Set<Node>();
+let scanTimeout: ReturnType<typeof setTimeout> | null = null;
+
+const scheduleScan = (node: Node) => {
+	pendingNodes.add(node);
+	if (scanTimeout) return;
+
+	scanTimeout = setTimeout(() => {
+		pendingNodes.forEach(root => scanFromRoot(root));
+		pendingNodes.clear();
+		scanTimeout = null;
+	}, 200);
+};
+
 const getBlockParent = (node: Node): HTMLElement | null => {
 	let current = node.parentElement;
 	while (current) {
@@ -103,7 +117,6 @@ const initSettings = () => {
 		globalEnabled = result.isEnabled;
 		useVazirFont = result.useVazir;
 
-		// راه‌اندازی
 		initObserver();
 		refreshState();
 	});
@@ -147,20 +160,16 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
 });
 
 let observer: MutationObserver | null = null;
-
-const initObserver = () => {
+function initObserver() {
 	if (observer) return;
 	observer = new MutationObserver((mutations) => {
 		if (!isEffectiveEnabled()) return;
-		mutations.forEach((mutation) => {
-			mutation.addedNodes.forEach((node) => scanFromRoot(node));
-			if (mutation.type === 'characterData') processTextNode(mutation.target);
+		mutations.forEach(m => {
+			m.addedNodes.forEach(node => scheduleScan(node));
+			if (m.type === 'characterData') scheduleScan(m.target);
 		});
 	});
-
-	if (document.body) {
-		observer.observe(document.body, { childList: true, subtree: true, characterData: true });
-	}
-};
+	observer.observe(document.body, { childList: true, subtree: true, characterData: true });
+}
 
 initSettings();
