@@ -1,34 +1,30 @@
-/* فونت وزیرمتن را اینجا تعریف می‌کنیم (بعداً فایلش را اضافه می‌کنیم) */
 @font-face {
   font-family: 'Vazirmatn';
-  src: local('vazirmatn'); /* فعلا فونت لوکال */
+  src: local('vazirmatn');
   font-weight: 400;
 }
 
-/* کلاسی که ما به المنت‌های فارسی اضافه می‌کنیم */
-.rtl-extension-active {
+.rtl-content-block {
   direction: rtl !important;
   text-align: right !important;
   font-family: 'Vazirmatn', 'Segoe UI', Tahoma, sans-serif !important;
+  unicode-bidi: isolate !important;
 }
 
-/* استثنا برای کدهای برنامه‌نویسی */
-/* هر تگ کدی که داخل المنت فارسی ما بود، باید چپ‌چین بماند */
-.rtl-extension-active pre,
-.rtl-extension-active code,
-.rtl-extension-active .hljs, /* برای هایلایت‌های متداول */
-.rtl-extension-active [class*="language-"], /* برای بلاک‌های کد */
-.rtl-extension-active kbd,
-.rtl-extension-active samp {
+.rtl-content-block pre,
+.rtl-content-block code,
+.rtl-content-block .hljs,
+.rtl-content-block [class*="language-"],
+.rtl-content-block .code-block,
+.rtl-content-block div[class*="code"] {
   direction: ltr !important;
   text-align: left !important;
-  font-family: 'Courier New', Courier, monospace !important;
-  unicode-bidi: isolate; /* جلوگیری از به هم ریختگی پرانتزها */
+  unicode-bidi: isolate !important;
 }
 
-/* اصلاح لیست‌ها */
-.rtl-extension-active ul,
-.rtl-extension-active ol {
-  padding-right: 2rem !important;
+.rtl-content-block ul,
+.rtl-content-block ol {
+  padding-right: 1.5rem !important;
   padding-left: 0 !important;
+  margin-right: 0 !important;
 }
